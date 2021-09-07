@@ -41,12 +41,32 @@ class ContactsRepository {
     });
   }
 
-  create(data) {
+  create({
+    name, email, phone, category_id,
+  }) {
     return new Promise((resolve) => {
-      const contact = { id: uuid(), ...data };
+      const contact = {
+        id: uuid(), name, email, phone, category_id,
+      };
 
       contacts = [...contacts, contact];
       resolve(contact);
+    });
+  }
+
+  update(id, {
+    name, email, phone, category_id,
+  }) {
+    return new Promise((resolve) => {
+      const updatedContact = {
+        id, name, email, phone, category_id,
+      };
+
+      contacts = contacts.map((contact) => (
+        contact.id === id ? updatedContact : contact
+      ));
+
+      resolve(updatedContact);
     });
   }
 }
